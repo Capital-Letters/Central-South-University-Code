@@ -1,45 +1,52 @@
 #include<bits/stdc++.h>
 using namespace std;
+int Getreal(string str)
+{
+    string Number[10]={"zero","one","two","three","four","five","six","seven","eight","nine"};
+    int i;
+    for(i=0;i<10;i++)
+    {
+        if(str==Number[i])
+        return i;
+    }
+}
 int main()
 {
-    char str[50];
-    map <string,int> num;
-    num["one"]=1;
-    num["two"]=2;
-    num["three"]=3;
-    num["four"]=4;
-    num["five"]=5;
-    num["six"]=6;
-    num["seven"]=7;
-    num["eight"]=8;
-    num["nine"]=9;
-    num["zero"]=0;
-    gets(str);
-    while (str!="zero + zero =")
+    int a,b;
+    string ca,cb;
+    int i;
+    while(true)
     {
-        int add=0;
-        string A="",B="";
-        for(int i=0;i<strlen(str);i++)
+        a=0;b=0;
+        for(i=0;;i++)
         {
-            cout << str[i];
-            if(add=0)
+            cin>>ca;
+            if(ca!="+")
             {
-                A+=str[i];
+                if(i==1) a*=10;
+                a+=Getreal(ca);
             }
-            if(add==1)
+            else
             {
-                B+=str[i];
+                break;
             }
-            if(str[i]=='+')
-            {
-                add=1;
-            }
+            
         }
-        cout << A << " " << B;
-        gets(str);
+        for(i=0;;i++)
+        {
+            cin>>cb;
+            if(cb!="=")
+            {
+                if(i==1) b*=10;
+                b+=Getreal(cb);
+            }
+            else
+            {
+                break;
+            }
+            
+        }
+        if(a+b==0) break;
+        cout << a+b << endl;
     }
-    
-    
-    
-
 }
