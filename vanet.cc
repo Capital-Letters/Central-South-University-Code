@@ -180,5 +180,31 @@ int main(int argc , char *argv[])
     data.AddDataCalculator(appTx);
 
     Ptr<CounterCalculator<>> appRx= CreateObject<CounterCalculator>();
+    appRx->SetKey("receiver-rx-packets");
+    appRx->SetContext("node[1]");
+    receiver[1]->SetCounter(appRx);
+    data.AddDataCalculator(appRx);
 
+    Ptr<TimeMinMaxAvgTotalCalculator> beaconStat=CreateObject<TimeMinMaxAvgTotalCalculator>();
+    beaconStat->SetKey("interbeacontime");
+    beaconStat->SetContext(".");
+    receiver[1]->SetBeaconTracker(beaconStat);
+    data.AddDataCalculator(beaconStat);
+    beaconStat->Enable();
+
+    Config::Set("NodeList/1/ApplicationList/1/$Receiver/SourceToTrack",Ipv4AddressValue("192.168.0.1"));
+
+
+    NS_LOG_INFO("Run Simulation");
+    Simulator::Stop(Seconds(60.0));
+    Sumulator::Run();
+    
+    Ptr<DataOutputInterface> output=0;
+    if(format=="omnet")
+    {
+        NS_LOG_INFO("Create omnet fornatted data output.");
+        output=CreateObject<OmnetDataOutput>();
+    }
+    Simulator::Destory();
+    os.close();
 }
